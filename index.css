@@ -12,24 +12,99 @@ header {
     font-weight: bold;
 }
 
+#instructionsPosition {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    transition: all 1.5s ease-in;
+    overflow: auto;
+    z-index: 3;
+}
+
+
+.instructionsContent {
+    background-color: #FFF;
+    padding: 15px;
+    transition: all 1.5s ease-in;
+    height: calc(100vh - 100px);
+    overflow: auto;
+}
+
+
 #container {
     display: grid;
     grid-template-columns: 20% 60% 20%;
     text-align: center;
     font-size: 2em;
+    margin: 1em;
+    height: 15em;
+}
+
+#wordtable {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #upgrades {
-    grid-column: 1 / 2; 
+    grid-column: 1 / 2;
     height: 100%;
-    padding: 1em;
+    background-color: white;
+    border-right: solid 2px black;
 }
 
 #main {
-    grid-column: 2 / 3; 
+    grid-column: 2 / 3;
+    background-color: white;
 }
 
 #items {
     grid-column: 3 / 4;
     height: 100%;
+    background-color: white;
+    border-left: solid 2px black;
+
+}
+
+#score {
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+#cent {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+#wordtable {
+    width: 75%; 
+    border-collapse: seperate;
+    border-spacing: 30px; 
+    margin: auto;
+    text-align: center;
+    font-size: 60px;
+}
+
+tr{
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+td{
+}
+
+#toprow{
+    margin: 0;
+    padding-top: 0px;
+}
+
+#bottomrow{
+    padding-bottom: 0px;
 }
