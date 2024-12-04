@@ -13,15 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
   openInstructions.addEventListener('click', function () {
     toggle_visibility("instructionsPosition");
   })
-  
+
   function toggle_visibility(id) {
     var e = document.getElementById(id);
-    if(e.style.display == 'block')
-       e.style.display = 'none';
+    if (e.style.display == 'block')
+      e.style.display = 'none';
     else
-       e.style.display = 'block';
-   
- }
+      e.style.display = 'block';
+
+  }
 
 
   const words = [
@@ -116,100 +116,114 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   const shortWords = words.filter(word => word.length <= 4);
   const longWords = words.filter(word => word.length > 4);
-  
+
   function toggleVisibility(elementId, tf) {
     var element = document.getElementById(elementId);
     if (tf) {
-        element.style.visibility = 'visible';
+      element.style.visibility = 'visible';
     } else {
-        element.style.visibility = 'hidden';
+      element.style.visibility = 'hidden';
     }
   }
 
-  function upgradeCells(upgrade){
-    
+  function upgradeCells(upgrade) {
+
     switch (upgrade) {
-        case 1:
-            console.log("Upgrade 1");
-            for(let i = 0; i < 9; i++){
-              if (i != 4){
-                toggleVisibility(cells[i], false);
-              } else {
-                toggleVisibility(cells[i], true);
-              }
-            }
-            break;
-        case 2:
-            for(let i = 0; i < 9; i++){
-              if (i != 3 || i != 5){
-                toggleVisibility(cells[i], false);
-              } else {
-                toggleVisibility(cells[i], true);
-              }
-            }
-            console.log("Upgrade 2");
-            break;
-        case 3:
-            for(let i = 0; i < 9; i++){
-              if (i != 3 || i != 5 || i != 4){
-                toggleVisibility(cells[i], false);
-              } else {
-                toggleVisibility(cells[i], true);
-              }
-            }
-            console.log("Handling state 3");
-            break;
-        case 4:
-            for(let i = 0; i < 9; i++){
-              if (i != 0 || i != 6 || i != 2 || i != 8){
-                toggleVisibility(cells[i], false);
-              } else {
-                toggleVisibility(cells[i], true);
-              }
-            }
-            console.log("Handling state 4");
-            break;
-        case 5:
-            for(let i = 0; i < 9; i++){
-              if (i != 1 || i != 3 || i != 5 || i != 7){
-                toggleVisibility(cells[i], true);
-              } else {
-                toggleVisibility(cells[i], false);
-              }
-            }
-            console.log("Handling state 5");
-            break;
-        case 6:
-            for(let i = 0; i < 9; i++){
-              if (i != 3 || i != 5 || i != 4){
-                toggleVisibility(cells[i], true);
-              } else {
-                toggleVisibility(cells[i], false);
-              }
-            }
-            console.log("Handling state 6");
-            break;
-        case 7:
-        
-            console.log("Handling state 7");
-            break;
-        case 8:
-            console.log("Handling state 8");
-            break;
-        case 9:
-            console.log("Handling state 9");
-            break;
-        default:
-            console.log("State not recognized");
-            break;
+      case 1:
+        console.log("Upgrade 1");
+        for (let i = 0; i < 9; i++) {
+          if (i != 4) {
+            toggleVisibility(cells[i], false);
+          } else {
+            toggleVisibility(cells[i], true);
+          }
+        }
+        break;
+      case 2:
+        for (let i = 0; i < 9; i++) {
+          if (i != 3 || i != 5) {
+            toggleVisibility(cells[i], false);
+          } else {
+            toggleVisibility(cells[i], true);
+          }
+        }
+        console.log("Upgrade 2");
+        break;
+      case 3:
+        for (let i = 0; i < 9; i++) {
+          if (i != 3 || i != 5 || i != 4) {
+            toggleVisibility(cells[i], false);
+          } else {
+            toggleVisibility(cells[i], true);
+          }
+        }
+        console.log("Handling state 3");
+        break;
+      case 4:
+        for (let i = 0; i < 9; i++) {
+          if (i != 0 || i != 6 || i != 2 || i != 8) {
+            toggleVisibility(cells[i], false);
+          } else {
+            toggleVisibility(cells[i], true);
+          }
+        }
+        console.log("Handling state 4");
+        break;
+      case 5:
+        for (let i = 0; i < 9; i++) {
+          if (i != 1 || i != 3 || i != 5 || i != 7) {
+            toggleVisibility(cells[i], true);
+          } else {
+            toggleVisibility(cells[i], false);
+          }
+        }
+        console.log("Handling state 5");
+        break;
+      case 6:
+        for (let i = 0; i < 9; i++) {
+          if (i != 3 || i != 5 || i != 4) {
+            toggleVisibility(cells[i], true);
+          } else {
+            toggleVisibility(cells[i], false);
+          }
+        }
+        console.log("Handling state 6");
+        break;
+      case 7:
+        for (let i = 0; i < 9; i++) {
+          if (i != 3 || i != 5) {
+            toggleVisibility(cells[i], true);
+          } else {
+            toggleVisibility(cells[i], false);
+          }
+        }
+        console.log("Handling state 7");
+        break;
+      case 8:
+        for (let i = 0; i < 9; i++) {
+          if (i != 4) {
+            toggleVisibility(cells[i], true);
+          } else {
+            toggleVisibility(cells[i], false);
+          }
+        }
+        console.log("Handling state 8");
+        break;
+      case 9:
+        for (let i = 0; i < 9; i++) {
+          toggleVisibility(cells[i], true);
+        }
+        console.log("Handling state 9");
+        break;
+      default:
+        console.log("State not recognized");
+        break;
     }
-  
-  
   }
     
     
-  function checkIfUpgraded(cell){
-    if(cell.style.visibility === 'visible'){
+  function checkIfUpgraded(cell) {
+    if (cell.style.visibility === 'visible') {
       return true
     }
     return false
@@ -220,32 +234,32 @@ document.addEventListener("DOMContentLoaded", () => {
     return Math.floor(Math.random() * (max + 1));
   }
   
-  function getRandomWordsShort(numWords){
-      const listWords = new Array(numWords);
-      
-      for(let i = 0; i < numWords; i++){
-        const randInt = getRandomInt(shortWords.length);
-        listWords[i] = shortWords[randInt];
-      }
-      return listWords;
-  }
-  function getRandomWordsLong(numWords){
+  function getRandomWordsShort(numWords) {
     const listWords = new Array(numWords);
-      
-      for(let i = 0; i < numWords; i++){
-        const randInt = getRandomInt(shortWords.length);
-        listWords[i] = longWords[randInt];
-      }
-      return listWords;
+
+    for (let i = 0; i < numWords; i++) {
+      const randInt = getRandomInt(shortWords.length);
+      listWords[i] = shortWords[randInt];
+    }
+    return listWords;
+  }
+  function getRandomWordsLong(numWords) {
+    const listWords = new Array(numWords);
+
+    for (let i = 0; i < numWords; i++) {
+      const randInt = getRandomInt(shortWords.length);
+      listWords[i] = longWords[randInt];
+    }
+    return listWords;
   }
 
   // Keystroke listener, Main function for driving the code
 
 
-  document.addEventListener('keypress', function(e) {
+  document.addEventListener('keypress', function (e) {
     const char = e.key.toLowerCase();
     //detect the keys per word.
-    
+
   })
 
 });
