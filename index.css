@@ -41,16 +41,16 @@ header {
 }
 
 .toggle {
-    padding:1em;
+    padding: 1em;
     background-color: #a9a9ff;
     font-size: 1em;
     text-align: center;
 }
 
 #openInstructions:hover {
-    background-color: #ceceff; 
+    background-color: #ceceff;
     transition-property: all;
-    transition:all 0.5s ease-in;
+    transition: all 0.5s ease-in;
 }
 
 #encouragement {
@@ -87,11 +87,32 @@ canvas {
     height: 100%;
     background-color: white;
     border-right: solid 2px black;
+    padding: 5px;
+}
+
+.upgrade {
+    border: solid 2px black;
+    border-radius: 2em;
+    background-color: #bef7ff;
+    font-size: 0.75em;
+}
+
+#cpsImage {
+    position: relative;
+    top:13px;
+    margin: 0;
+}
+
+.cent {
+    width: 40px;
+    height: 40px;
 }
 
 #main {
     grid-column: 2 / 3;
     background-color: white;
+    padding: 5px;
+    height: 100%;
 }
 
 #items {
@@ -99,7 +120,7 @@ canvas {
     height: 100%;
     background-color: white;
     border-left: solid 2px black;
-
+    padding: 5px;
 }
 
 #score {
@@ -110,9 +131,7 @@ canvas {
 }
 
 #cent {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 #wordtable {
