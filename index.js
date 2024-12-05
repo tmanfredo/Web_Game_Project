@@ -1,9 +1,16 @@
-document.addEventListener("DOMContentLoaded", () => {
+const CPS_INCREMENT = 1;
+const HEAD_SIZE = 50;
+const EYE_SIZE = 7.5;
+const X_POS = 150;
+const Y_POS = 62.5;
 
-  const HEAD_SIZE = 50;
-  const EYE_SIZE = 7.5;
-  let x_pos = 150;
-  let y_pos = 62.5;
+document.addEventListener("DOMContentLoaded", () => {
+  let characters = document.getElementById("characters");
+  let characterCount = Number(characters.innerHTML);
+  let autoCost = Number(document.getElementById("autoCost").innerHTML)
+  let cps = 0;
+  let cpsCount = document.getElementById("cps");
+  let cpsInterval = setInterval(cpsFunction, 1000);
 
   const canvas = document.getElementById("canvas");
   const context = canvas.getContext("2d");
@@ -15,14 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const openInstructions = document.getElementById("openInstructions");
 
   closeInstructions.addEventListener('click', function () {
-    toggle_visibility("instructionsPosition");
+    toggle_instruction_visibility("instructionsPosition");
   })
 
   openInstructions.addEventListener('click', function () {
-    toggle_visibility("instructionsPosition");
+    toggle_instruction_visibility("instructionsPosition");
   })
 
-  function toggle_visibility(id) {
+  function toggle_instruction_visibility(id) {
     var e = document.getElementById(id);
     if (e.style.display == 'block')
       e.style.display = 'none';
@@ -30,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
       e.style.display = 'block';
 
   }
+
+
 
 
   const words = [
@@ -278,25 +287,46 @@ document.addEventListener("DOMContentLoaded", () => {
     context.lineWidth = 5;
     context.beginPath();
 
-    context.arc(x_pos, y_pos, HEAD_SIZE, 0, 360);
+    context.arc(X_POS, Y_POS, HEAD_SIZE, 0, 360);
     context.fill();
     context.stroke();
     //Draw the eyes
     context.fillStyle = "black";
 
     context.beginPath();
-    context.arc(x_pos - 15, y_pos - 15, EYE_SIZE, 0, 360);
+    context.arc(X_POS - 15, Y_POS - 15, EYE_SIZE, 0, 360);
     context.fill();
     context.beginPath();
-    context.arc(x_pos + 15, y_pos - 15, EYE_SIZE, 0, 360);
+    context.arc(X_POS + 15, Y_POS - 15, EYE_SIZE, 0, 360);
     context.fill();
 
     context.strokeStyle = "green";
     context.beginPath();
     context.lineWidth = 2.5;
-    context.arc(x_pos, y_pos+5, 25, 0.35, 2.8);
+    context.arc(X_POS, Y_POS+5, 25, 0.35, 2.8);
     context.stroke();
   }
+
+document.getElementById("auto").addEventListener('click', function(){
+  
+  if(characterCount < autoCost){
+    alert("You do not have enough characters for this upgrade")
+  } else {
+    characterCount -= autoCost;
+    cps += CPS_INCREMENT;
+    setCharacterCounts();
+  }
+})
+
+function cpsFunction() {
+  characterCount += cps;
+  setCharacterCounts();
+}
+
+function setCharacterCounts(){
+  characters.innerHTML = String(characterCount);
+  cpsCount.innerHTML = String(cps);
+}
 
 });
 
