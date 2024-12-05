@@ -1,4 +1,5 @@
 const CPS_INCREMENT = 1;
+const CPS_INTERVAL = 1000;
 const HEAD_SIZE = 50;
 const EYE_SIZE = 7.5;
 const X_POS = 150;
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let autoCost = Number(document.getElementById("autoCost").innerHTML)
   let cps = 0;
   let cpsCount = document.getElementById("cps");
-  let cpsInterval = setInterval(cpsFunction, 1000);
+  let cpsInterval = setInterval(cpsFunction, CPS_INTERVAL);
 
   const canvas = document.getElementById("canvas");
   const context = canvas.getContext("2d");
@@ -329,6 +330,3 @@ function setCharacterCounts(){
 }
 
 });
-
-
-
