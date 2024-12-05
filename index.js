@@ -13,9 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let cpsCount = document.getElementById("cps");
   let cpsInterval = setInterval(cpsFunction, CPS_INTERVAL);
 
-  const canvas = document.getElementById("canvas");
-  const context = canvas.getContext("2d");
-  //draw features (eyes and head)
+  //draw face features (eyes, head, and smile)
   drawFeatures();
 
   const cells = document.querySelectorAll('#wordtable td'); //array list 
@@ -281,6 +279,9 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   function drawFeatures() {
+    const canvas = document.getElementById("canvas");
+    const context = canvas.getContext("2d");
+
     //Draw the head
     context.fillStyle = "yellow";
     //outline around head
