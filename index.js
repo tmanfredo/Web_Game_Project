@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  const HEAD_SIZE = 50;
+  const EYE_SIZE = 7.5;
+  let x_pos = 150;
+  let y_pos = 62.5;
+
   const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
+  const context = canvas.getContext("2d");
+  //draw features (eyes and head)
+  drawFeatures();
 
   const cells = document.querySelectorAll('#wordtable td'); //array list 
   const closeInstructions = document.getElementById("closeInstructions");
@@ -220,8 +228,8 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
     }
   }
-    
-    
+
+
   function checkIfUpgraded(cell) {
     if (cell.style.visibility === 'visible') {
       return true
@@ -233,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function getRandomInt(max) {
     return Math.floor(Math.random() * (max + 1));
   }
-  
+
   function getRandomWordsShort(numWords) {
     const listWords = new Array(numWords);
 
@@ -262,4 +270,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   })
 
+  function drawFeatures() {
+    //Draw the head
+    context.fillStyle = "yellow";
+    //outline around head
+    context.strokeStyle = "black";
+    context.lineWidth = 5;
+    context.beginPath();
+
+    context.arc(x_pos, y_pos, HEAD_SIZE, 0, 360);
+    context.fill();
+    context.stroke();
+    //Draw the eyes
+    context.fillStyle = "black";
+
+    context.beginPath();
+    context.arc(x_pos - 15, y_pos - 15, EYE_SIZE, 0, 360);
+    context.fill();
+    context.beginPath();
+    context.arc(x_pos + 15, y_pos - 15, EYE_SIZE, 0, 360);
+    context.fill();
+
+    context.strokeStyle = "green";
+    context.beginPath();
+    context.lineWidth = 2.5;
+    context.arc(x_pos, y_pos+5, 25, 0.35, 2.8);
+    context.stroke();
+  }
+
 });
+
+
+
