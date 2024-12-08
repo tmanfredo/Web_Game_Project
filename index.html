@@ -33,15 +33,21 @@
     <div id="container">
         <div id="upgrades">
             <legend>Upgrades</legend>
-            <p class="upgrade">More words upgrade here</p>
+
+            <div id="wordcount" class="upgrade" type="button">
+                <p>
+                    Displayed Words<br>
+                    Words:<span id="wordCount">0</span><br>
+                    Cost: <span id="wordCost">1000</span> <img class="cent" id="cpsImage" src="images/cent.png"></img></p>
+            </div>
 
             <hr>
 
-            <div id="auto" class="upgrade" type="button"">
+            <div id="auto" class="upgrade" type="button">
                 <p>
                     Auto-Typer<br>
                     CPS:<span id="cps">0</span><br>
-                    Cost: <span id="autoCost">10000</span> <img class="cent" id="cpsImage" src="images/cent.png"></img></p>
+                    Cost: <span id="autoCost">100</span> <img class="cent" id="cpsImage" src="images/cent.png"></img></p>
             </div>
 
         </div>
@@ -49,31 +55,31 @@
         <div id="main">
             <div id="score">
                 <img id="cent" class="cent" src="images/cent.png"></img>
-                <p id="characters">100047</p>
+                <p id="characters">10000</p>
             </div>
 
             <div id="wordscape">
                 <table id="wordtable">
                     <tr id="toprow">
-                        <td id="w1">w1</th>
-                        <td id="w2">w2</th>
-                        <td id="w3">w3</th>
+                        <td id="w1"></th>
+                        <td id="w2"></th>
+                        <td id="w3"></th>
                     </tr>
                     <tr>
-                        <td id="w4">w4</th>
-                        <td id="w5">w5</th>
-                        <td id="w6">w6</th>
+                        <td id="w4"></th>
+                        <td id="w5"></th>
+                        <td id="w6"></th>
                     </tr>
                     <tr id="bottomrow">
-                        <td id="w7">w7</td>
-                        <td id="w8">w8</td>
-                        <td id="w9">w9</td>
+                        <td id="w7"></td>
+                        <td id="w8"></td>
+                        <td id="w9"></td>
                     </tr>
                 </table>
             </div>
 
             <div id="letterCounter">
-                <p id="curLetter">thomas help me im in a computer</p>
+                <p id="curLetter">Begin Typing</p>
             </div>
 
 

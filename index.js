@@ -8,11 +8,18 @@ const Y_POS = 62.5;
 document.addEventListener("DOMContentLoaded", () => {
   let characters = document.getElementById("characters");
   let characterCount = Number(characters.innerHTML);
+  let wordCount = document.getElementById("wordCount");
   let autoCost = Number(document.getElementById("autoCost").innerHTML)
+  let wordCost = Number(document.getElementById("wordCost").innerHTML)
   let cps = 0;
   let cpsCount = document.getElementById("cps");
   let cpsInterval = setInterval(cpsFunction, CPS_INTERVAL);
 
+  let lastLetter = document.getElementById("curLetter");
+
+  let upgrade = 1;
+
+  
   //draw face features (eyes, head, and smile)
   drawFeatures();
 
@@ -133,14 +140,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const shortWords = words.filter(word => word.length <= 4);
   const longWords = words.filter(word => word.length > 4);
 
-  function toggleVisibility(elementId, tf) {
-    var element = document.getElementById(elementId);
+  //everything loaded, Start Program
+  upgradeCells(upgrade);
+  fillCells();
+
+  function toggleVisibility(element, tf) {
     if (tf) {
       element.style.visibility = 'visible';
     } else {
       element.style.visibility = 'hidden';
     }
   }
+
+  function fillCells() {
+
+    cells.forEach(cell => {
+        const randomWord = words[Math.floor(Math.random() * words.length)]; // Select a random word
+        cell.textContent = randomWord; // Set the cell's text content to the random word
+    });
+  }
+
+  function fillCell(cell) {
+    const randomWord = words[Math.floor(Math.random() * words.length)]; // Select a random word
+    cell.textContent = randomWord; // Set the cell's text content to the random word
+  }
+
 
   function upgradeCells(upgrade) {
 
@@ -156,79 +180,55 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         break;
       case 2:
-        for (let i = 0; i < 9; i++) {
-          if (i != 3 || i != 5) {
-            toggleVisibility(cells[i], false);
-          } else {
-            toggleVisibility(cells[i], true);
-          }
-        }
+        toggleVisibility(cells[3], true);
+        toggleVisibility(cells[5], true);
+        toggleVisibility(cells[4], false);
         console.log("Upgrade 2");
         break;
       case 3:
-        for (let i = 0; i < 9; i++) {
-          if (i != 3 || i != 5 || i != 4) {
-            toggleVisibility(cells[i], false);
-          } else {
-            toggleVisibility(cells[i], true);
-          }
-        }
+        toggleVisibility(cells[4], true);
         console.log("Handling state 3");
         break;
       case 4:
-        for (let i = 0; i < 9; i++) {
-          if (i != 0 || i != 6 || i != 2 || i != 8) {
-            toggleVisibility(cells[i], false);
-          } else {
-            toggleVisibility(cells[i], true);
-          }
-        }
+        toggleVisibility(cells[3], false);
+        toggleVisibility(cells[5], false);
+        toggleVisibility(cells[4], false);
+
+        toggleVisibility(cells[0], true);
+        toggleVisibility(cells[2], true);
+        toggleVisibility(cells[6], true);
+        toggleVisibility(cells[8], true);
+      
         console.log("Handling state 4");
         break;
       case 5:
-        for (let i = 0; i < 9; i++) {
-          if (i != 1 || i != 3 || i != 5 || i != 7) {
-            toggleVisibility(cells[i], true);
-          } else {
-            toggleVisibility(cells[i], false);
-          }
-        }
+        toggleVisibility(cells[4], true);
+
         console.log("Handling state 5");
         break;
       case 6:
-        for (let i = 0; i < 9; i++) {
-          if (i != 3 || i != 5 || i != 4) {
-            toggleVisibility(cells[i], true);
-          } else {
-            toggleVisibility(cells[i], false);
-          }
-        }
+        toggleVisibility(cells[4], false);
+        toggleVisibility(cells[1], true);
+        toggleVisibility(cells[7], true);
+
+
         console.log("Handling state 6");
         break;
       case 7:
-        for (let i = 0; i < 9; i++) {
-          if (i != 3 || i != 5) {
-            toggleVisibility(cells[i], true);
-          } else {
-            toggleVisibility(cells[i], false);
-          }
-        }
+        toggleVisibility(cells[4], true);
+
         console.log("Handling state 7");
         break;
       case 8:
-        for (let i = 0; i < 9; i++) {
-          if (i != 4) {
-            toggleVisibility(cells[i], true);
-          } else {
-            toggleVisibility(cells[i], false);
-          }
-        }
+        toggleVisibility(cells[4], false);
+        toggleVisibility(cells[3], true);
+        toggleVisibility(cells[5], true);
+
         console.log("Handling state 8");
         break;
       case 9:
-        for (let i = 0; i < 9; i++) {
-          toggleVisibility(cells[i], true);
-        }
+        toggleVisibility(cells[4], true);
+
         console.log("Handling state 9");
         break;
       default:
@@ -274,9 +274,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener('keypress', function (e) {
     const char = e.key.toLowerCase();
-    //detect the keys per word.
+    lastLetter.textContent = char; // Update the display for the last letter pressed
 
-  })
+    cells.forEach(cell => {
+      if (checkIfUpgraded(cell)) {
+        let word = cell.textContent;
+        let updatedHTML = '';
+
+        let complete = true;
+        for (let i = 0; i < word.length; i++) {
+          if(word[i].class != "match"){
+            console.log("Unknown Letter detected, scanning");
+            if (word[i].toLowerCase() === char) {
+              console.log("New Match");
+              updatedHTML += `<span class="match">${word[i]}</span>`; // Change matching character to green
+            } else if (word[i] !== ' ') {
+              updatedHTML += `<span>${word[i]}</span>`;
+              complete = complete && word[i].style && word[i].style.color === 'green'; // Check if already turned green
+            } else {
+              console.log("Letter is not in any of these words");
+              updatedHTML += word[i]; // Keep spaces and non-letter characters
+            }
+          }
+          else{
+            console.log(char, " is already green");
+          }
+        }
+
+        cell.innerHTML = updatedHTML;
+
+        // If the entire word is green, refill the cell
+        if (complete) {
+          fillCell(cell); // Replace with a new word
+        }
+      }
+    });
+  });
 
   function drawFeatures() {
     const canvas = document.getElementById("canvas");
@@ -309,25 +342,49 @@ document.addEventListener("DOMContentLoaded", () => {
     context.stroke();
   }
 
-document.getElementById("auto").addEventListener('click', function(){
+
+
+  //Upgrades and Buttons
+
+  document.getElementById("wordcount").addEventListener('click', function(){
   
-  if(characterCount < autoCost){
-    alert("You do not have enough characters for this upgrade")
-  } else {
-    characterCount -= autoCost;
-    cps += CPS_INCREMENT;
+    if(characterCount < wordCost){
+      alert("You do not have enough characters for this upgrade")
+    } else {
+      characterCount -= wordCost;
+      upgrade++;
+      setCharacterCounts();
+      upgradeCells(upgrade)
+      console.log(upgrade)
+    }
+
+    if(upgrade >= 9){
+      console.log("Disabling button")
+      document.getElementById("wordcount").style.pointerEvents = "none";
+      document.getElementById("wordcount").style.opacity = "0.5"; 
+    }
+  })
+
+  document.getElementById("auto").addEventListener('click', function(){
+    
+    if(characterCount < autoCost){
+      alert("You do not have enough characters for this upgrade")
+    } else {
+      characterCount -= autoCost;
+      cps += CPS_INCREMENT;
+      setCharacterCounts();
+    }
+  })
+
+  function cpsFunction() {
+    characterCount += cps;
     setCharacterCounts();
   }
-})
 
-function cpsFunction() {
-  characterCount += cps;
-  setCharacterCounts();
-}
-
-function setCharacterCounts(){
-  characters.innerHTML = String(characterCount);
-  cpsCount.innerHTML = String(cps);
-}
+  function setCharacterCounts(){
+    characters.innerHTML = String(characterCount);
+    cpsCount.innerHTML = String(cps);
+    wordCount.innerHTML = String(upgrade)
+  }
 
 });
