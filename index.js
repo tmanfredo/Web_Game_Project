@@ -4,6 +4,8 @@ const HEAD_SIZE = 50;
 const EYE_SIZE = 7.5;
 const X_POS = 150;
 const Y_POS = 62.5;
+let ACTIVE_CELLS_LIST = [[4],[3,5],[3,4,5],[0,2,6,8],[0,2,4,6,8],[0,1,2,6,7,8],[0,1,2,4,6,7,8],[0,1,2,3,5,6,7,8],[0,1,2,3,4,5,6,7,8]];
+
 
 document.addEventListener("DOMContentLoaded", () => {
   let characters = document.getElementById("characters");
@@ -19,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let upgrade = 1;
 
+
+ 
 
   //draw face features (eyes, head, and smile)
   drawFeatures();
@@ -142,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //everything loaded, Start Program
   upgradeCells(upgrade);
-  fillCells();
+  fillCell(cells[4]);
 
   function toggleVisibility(element, tf) {
     if (tf) {
@@ -151,22 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
       element.style.visibility = 'hidden';
     }
   }
-
-  function fillCells() {
-
-    cells.forEach(cell => {
-      const randomWord = shortWords[Math.floor(Math.random() * shortWords.length)]; // Select a random word
-
-      let letters = randomWord.split("");
-      let html = "";
-      for (let letter of letters) {
-        html += "<span>" + letter + "</span>";
-      }
-
-      cell.innerHTML = html; // Set the cell's text content to the random word
-    });
-  }
-
   function fillCell(cell) {
     const randomWord = shortWords[Math.floor(Math.random() * shortWords.length)]; // Select a random word
 
@@ -181,74 +169,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function upgradeCells(upgrade) {
-
-    switch (upgrade) {
-      case 1:
-        console.log("Upgrade 1");
-        for (let i = 0; i < 9; i++) {
-          if (i != 4) {
-            toggleVisibility(cells[i], false);
-          } else {
-            toggleVisibility(cells[i], true);
-          }
-        }
-        break;
-      case 2:
-        toggleVisibility(cells[3], true);
-        toggleVisibility(cells[5], true);
-        toggleVisibility(cells[4], false);
-        console.log("Upgrade 2");
-        break;
-      case 3:
-        toggleVisibility(cells[4], true);
-        console.log("Handling state 3");
-        break;
-      case 4:
-        toggleVisibility(cells[3], false);
-        toggleVisibility(cells[5], false);
-        toggleVisibility(cells[4], false);
-
-        toggleVisibility(cells[0], true);
-        toggleVisibility(cells[2], true);
-        toggleVisibility(cells[6], true);
-        toggleVisibility(cells[8], true);
-
-        console.log("Handling state 4");
-        break;
-      case 5:
-        toggleVisibility(cells[4], true);
-
-        console.log("Handling state 5");
-        break;
-      case 6:
-        toggleVisibility(cells[4], false);
-        toggleVisibility(cells[1], true);
-        toggleVisibility(cells[7], true);
-
-
-        console.log("Handling state 6");
-        break;
-      case 7:
-        toggleVisibility(cells[4], true);
-
-        console.log("Handling state 7");
-        break;
-      case 8:
-        toggleVisibility(cells[4], false);
-        toggleVisibility(cells[3], true);
-        toggleVisibility(cells[5], true);
-
-        console.log("Handling state 8");
-        break;
-      case 9:
-        toggleVisibility(cells[4], true);
-
-        console.log("Handling state 9");
-        break;
-      default:
-        console.log("State not recognized");
-        break;
-    }
+    cells.forEach(cell => {
+      toggleVisibility(cell, false);
+    });
+    cells.forEach(cell => {
+      if(cell.classList.contains(String(upgrade))){
+        toggleVisibility(cell, true);
+      }
+    });
+    
   }
 
 
@@ -361,10 +290,27 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("You do not have enough characters for this upgrade")
     } else {
       characterCount -= wordCost;
+
+      let previousCells = ACTIVE_CELLS_LIST[upgrade-1];
+      console.log(previousCells);
       upgrade++;
+      let nextCells = ACTIVE_CELLS_LIST[upgrade-1];
+      console.log(nextCells);
+
+      for(let i = 0; i < nextCells.length; i++){
+        if(i == nextCells.length - 1){
+          fillCell(cells[nextCells[i]]);
+        } 
+        else {
+          cells[nextCells[i]].innerHTML = cells[previousCells[i]].innerHTML;
+          
+        }
+
+      }
+
+
       setCharacterCounts();
       upgradeCells(upgrade)
-      console.log(upgrade)
     }
 
     if (upgrade >= 9) {
