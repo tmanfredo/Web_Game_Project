@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let upgrade = 1;
 
-  
+
   //draw face features (eyes, head, and smile)
   drawFeatures();
 
@@ -137,8 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
     'wish', 'with', 'within', 'without', 'woman', 'wonder', 'word', 'work', 'worker', 'world',
     'would', 'write', 'writer', 'wrong', 'year', 'yellow', 'yes', 'you', 'young', 'your', 'yourself', 'youth'
   ];
-  const shortWords = words.filter(word => word.length <= 4);
-  const longWords = words.filter(word => word.length > 4);
+  const shortWords = words.filter(word => word.length <= 5);
+  const longWords = words.filter(word => word.length > 5);
 
   //everything loaded, Start Program
   upgradeCells(upgrade);
@@ -155,14 +155,28 @@ document.addEventListener("DOMContentLoaded", () => {
   function fillCells() {
 
     cells.forEach(cell => {
-        const randomWord = words[Math.floor(Math.random() * words.length)]; // Select a random word
-        cell.textContent = randomWord; // Set the cell's text content to the random word
+      const randomWord = shortWords[Math.floor(Math.random() * shortWords.length)]; // Select a random word
+
+      let letters = randomWord.split("");
+      let html = "";
+      for (let letter of letters) {
+        html += "<span>" + letter + "</span>";
+      }
+
+      cell.innerHTML = html; // Set the cell's text content to the random word
     });
   }
 
   function fillCell(cell) {
-    const randomWord = words[Math.floor(Math.random() * words.length)]; // Select a random word
-    cell.textContent = randomWord; // Set the cell's text content to the random word
+    const randomWord = shortWords[Math.floor(Math.random() * shortWords.length)]; // Select a random word
+
+    let letters = randomWord.split("");
+    let html = "";
+    for (let letter of letters) {
+      html += "<span>" + letter + "</span>";
+    }
+
+    cell.innerHTML = html; // Set the cell's text content to the random word
   }
 
 
@@ -198,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleVisibility(cells[2], true);
         toggleVisibility(cells[6], true);
         toggleVisibility(cells[8], true);
-      
+
         console.log("Handling state 4");
         break;
       case 5:
@@ -273,38 +287,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   document.addEventListener('keypress', function (e) {
-    const char = e.key.toLowerCase();
+    const char = e.key;
     lastLetter.textContent = char; // Update the display for the last letter pressed
 
     cells.forEach(cell => {
       if (checkIfUpgraded(cell)) {
-        let word = cell.textContent;
-        let updatedHTML = '';
-
-        let complete = true;
-        for (let i = 0; i < word.length; i++) {
-          if(word[i].class != "match"){
-            console.log("Unknown Letter detected, scanning");
-            if (word[i].toLowerCase() === char) {
-              console.log("New Match");
-              updatedHTML += `<span class="match">${word[i]}</span>`; // Change matching character to green
-            } else if (word[i] !== ' ') {
-              updatedHTML += `<span>${word[i]}</span>`;
-              complete = complete && word[i].style && word[i].style.color === 'green'; // Check if already turned green
-            } else {
-              console.log("Letter is not in any of these words");
-              updatedHTML += word[i]; // Keep spaces and non-letter characters
+        let letters = cell.querySelectorAll("span");
+        for (let letter of letters) {
+          if (letter.class !== "match") {
+            if (letter.innerHTML === char) {
+              // Change matching character to green
+              letter.classList.add("match");
             }
           }
-          else{
-            console.log(char, " is already green");
-          }
         }
-
-        cell.innerHTML = updatedHTML;
-
+        let complete = false;
+        for (let letter of letters) {
+          if (!letter.classList.contains("match")) {
+            complete = false;
+            break;
+          }
+          complete = true;
+        }
+        console.log(complete);
         // If the entire word is green, refill the cell
         if (complete) {
+          
           fillCell(cell); // Replace with a new word
         }
       }
@@ -338,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
     context.strokeStyle = "green";
     context.beginPath();
     context.lineWidth = 2.5;
-    context.arc(X_POS, Y_POS+5, 25, 0.35, 2.8);
+    context.arc(X_POS, Y_POS + 5, 25, 0.35, 2.8);
     context.stroke();
   }
 
@@ -346,9 +354,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Upgrades and Buttons
 
-  document.getElementById("wordcount").addEventListener('click', function(){
-  
-    if(characterCount < wordCost){
+  document.getElementById("wordcount").addEventListener('click', function () {
+
+    if (characterCount < wordCost) {
       alert("You do not have enough characters for this upgrade")
     } else {
       characterCount -= wordCost;
@@ -358,16 +366,16 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(upgrade)
     }
 
-    if(upgrade >= 9){
+    if (upgrade >= 9) {
       console.log("Disabling button")
       document.getElementById("wordcount").style.pointerEvents = "none";
-      document.getElementById("wordcount").style.opacity = "0.5"; 
+      document.getElementById("wordcount").style.opacity = "0.5";
     }
   })
 
-  document.getElementById("auto").addEventListener('click', function(){
-    
-    if(characterCount < autoCost){
+  document.getElementById("auto").addEventListener('click', function () {
+
+    if (characterCount < autoCost) {
       alert("You do not have enough characters for this upgrade")
     } else {
       characterCount -= autoCost;
@@ -381,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setCharacterCounts();
   }
 
-  function setCharacterCounts(){
+  function setCharacterCounts() {
     characters.innerHTML = String(characterCount);
     cpsCount.innerHTML = String(cps);
     wordCount.innerHTML = String(upgrade)
