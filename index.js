@@ -312,7 +312,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(complete);
         // If the entire word is green, refill the cell
         if (complete) {
-          
+          characterCount += letters.length;
+          setCharacterCounts();
           fillCell(cell); // Replace with a new word
         }
       }
