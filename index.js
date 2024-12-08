@@ -141,8 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
     'wish', 'with', 'within', 'without', 'woman', 'wonder', 'word', 'work', 'worker', 'world',
     'would', 'write', 'writer', 'wrong', 'year', 'yellow', 'yes', 'you', 'young', 'your', 'yourself', 'youth'
   ];
-  const shortWords = words.filter(word => word.length <= 5);
-  const longWords = words.filter(word => word.length > 5);
+  const shortWords = words.filter(word => word.length <= 6);
+  const longWords = words.filter(word => word.length > 6);
 
   //everything loaded, Start Program
   upgradeCells(upgrade);
