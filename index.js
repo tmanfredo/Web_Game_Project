@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("You do not have enough characters for this upgrade")
     } else {
       characterCount -= wordCost;
-
+      wordCost *= 10;
       let previousCells = ACTIVE_CELLS_LIST[upgrade - 1];
       upgrade++;
       let nextCells = ACTIVE_CELLS_LIST[upgrade - 1];
@@ -311,6 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("You do not have enough characters for this upgrade")
     } else {
       characterCount -= autoCost;
+      autoCost = Math.floor(autoCost*1.3);
       cps += CPS_INCREMENT;
       setCharacterCounts();
     }
@@ -325,6 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
     characters.innerHTML = String(characterCount);
     cpsCount.innerHTML = String(cps);
     wordCount.innerHTML = String(upgrade)
+    document.getElementById("autoCost").innerHTML = String(autoCost);
+    document.getElementById("wordCost").innerHTML = String(wordCost);
   }
 
 });
