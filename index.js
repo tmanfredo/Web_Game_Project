@@ -4,7 +4,7 @@ const HEAD_SIZE = 50;
 const EYE_SIZE = 7.5;
 const X_POS = 150;
 const Y_POS = 62.5;
-let ACTIVE_CELLS_LIST = [[4],[3,5],[3,4,5],[0,2,6,8],[0,2,4,6,8],[0,1,2,6,7,8],[0,1,2,4,6,7,8],[0,1,2,3,5,6,7,8],[0,1,2,3,4,5,6,7,8]];
+let ACTIVE_CELLS_LIST = [[4], [3, 5], [3, 4, 5], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 1, 2, 6, 7, 8], [0, 1, 2, 4, 6, 7, 8], [0, 1, 2, 3, 5, 6, 7, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8]];
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,14 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
   let wordCost = Number(document.getElementById("wordCost").innerHTML)
   let cps = 0;
   let cpsCount = document.getElementById("cps");
-  let cpsInterval = setInterval(cpsFunction, CPS_INTERVAL);
+  setInterval(cpsFunction, CPS_INTERVAL);
 
   let lastLetter = document.getElementById("curLetter");
 
   let upgrade = 1;
 
 
- 
+
 
   //draw face features (eyes, head, and smile)
   drawFeatures();
@@ -173,11 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
       toggleVisibility(cell, false);
     });
     cells.forEach(cell => {
-      if(cell.classList.contains(String(upgrade))){
+      if (cell.classList.contains(String(upgrade))) {
         toggleVisibility(cell, true);
       }
     });
-    
+
   }
 
 
@@ -189,36 +189,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * (max + 1));
-  }
-
-  function getRandomWordsShort(numWords) {
-    const listWords = new Array(numWords);
-
-    for (let i = 0; i < numWords; i++) {
-      const randInt = getRandomInt(shortWords.length);
-      listWords[i] = shortWords[randInt];
-    }
-    return listWords;
-  }
-  function getRandomWordsLong(numWords) {
-    const listWords = new Array(numWords);
-
-    for (let i = 0; i < numWords; i++) {
-      const randInt = getRandomInt(shortWords.length);
-      listWords[i] = longWords[randInt];
-    }
-    return listWords;
-  }
-
   // Keystroke listener, Main function for driving the code
 
 
   document.addEventListener('keypress', function (e) {
     const char = e.key;
     lastLetter.textContent = char; // Update the display for the last letter pressed
-
+    lastLetter.style.color = "red";
     cells.forEach(cell => {
       if (checkIfUpgraded(cell)) {
         let letters = cell.querySelectorAll("span");
@@ -227,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (letter.innerHTML === char) {
               // Change matching character to green
               letter.classList.add("match");
+              lastLetter.style.color = "green"
             }
           }
         }
@@ -291,19 +269,19 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       characterCount -= wordCost;
 
-      let previousCells = ACTIVE_CELLS_LIST[upgrade-1];
+      let previousCells = ACTIVE_CELLS_LIST[upgrade - 1];
       console.log(previousCells);
       upgrade++;
-      let nextCells = ACTIVE_CELLS_LIST[upgrade-1];
+      let nextCells = ACTIVE_CELLS_LIST[upgrade - 1];
       console.log(nextCells);
 
-      for(let i = 0; i < nextCells.length; i++){
-        if(i == nextCells.length - 1){
+      for (let i = 0; i < nextCells.length; i++) {
+        if (i == nextCells.length - 1) {
           fillCell(cells[nextCells[i]]);
-        } 
+        }
         else {
           cells[nextCells[i]].innerHTML = cells[previousCells[i]].innerHTML;
-          
+
         }
 
       }
