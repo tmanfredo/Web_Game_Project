@@ -22,7 +22,16 @@
                 <p>Despite the name of this game, you will need to put in some work to get this game moving on its own! 
                     The premise of this game is that you need to type the words on screen to get the in-game currency of 'characters'.
                     Each word you complete gives you more 'characters' to spend which will allow you to purchase different upgrades to get you more characters!"
-                    The game will only use your keyboard to type characters, and your mouse to select upgrades and navigate the page!
+                    The game will only use your keyboard to type characters, and your mouse to select upgrades and navigate the page! Once you type the full word,
+                    your score will be updated, but beware! Any incorrect characters typed will cause your score to decrease!<br><br>
+                <h4>Upgrades - Prices increase with each purchase</h4>
+                    <strong>Displayed Words: </strong> You can type more words at once with this upgrade! Up to 9 total words can be available to use at once!<br>
+                    <strong>Auto-Typer: </strong> This upgrade will give you characters each second without a letter needing to be typed! 
+                            It starts at 0 Characters Per Second (CPS) and increases by 1 from there! <br>
+                    <strong>Letter Values: </strong>You have the option to increase the value of each letter, but be warned! Incorrect characters typed will cause your score to decrement by the same amount! <br><br>
+                <h4>Tips</h4>
+                    <li>Work fast, but don't get ahead of yourself! Those incorrect characters can make you lose a lot down the road!</li>
+                    <li>Same letters are counted with one keystroke, so don't let double letters mess you up!</li>
                     <br><br><span id="encouragement">Now get out there and get typing!</span></p>
                 <canvas id="canvas"></canvas>
                 <button class="toggle" id="closeInstructions">Close</button>
@@ -48,6 +57,15 @@
                     Auto-Typer<br>
                     CPS:<span id="cps">0</span><br>
                     Cost: <span id="autoCost">10</span> <img class="cent" id="cpsImage" src="images/cent.png"></img></p>
+            </div>
+
+            <hr>
+
+            <div id="value" class="upgrade" type="button">
+                <p>
+                    Letter Value<br>
+                    Value Per Letter:<span id="letterValue">1</span><br>
+                    Cost: <span id="letterCost">50</span> <img class="cent" id="cpsImage" src="images/cent.png"></img></p>
             </div>
 
         </div>

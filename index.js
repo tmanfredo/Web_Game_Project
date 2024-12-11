@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let wordCount = document.getElementById("wordCount");
   let autoCost = Number(document.getElementById("autoCost").innerHTML)
   let wordCost = Number(document.getElementById("wordCost").innerHTML)
+  let letterCost = Number(document.getElementById("letterCost").innerHTML)
   let cps = 0;
   let cpsCount = document.getElementById("cps");
   setInterval(cpsFunction, CPS_INTERVAL);
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let lastLetter = document.getElementById("curLetter");
   let scoreAdd = document.getElementById("scoreMath");
   let upgrade = 1;
-  let letterValue = 1;
+  let letterValue = Number(document.getElementById("letterValue").innerHTML);
 
 
 
@@ -231,7 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
-    if (!correct) {
+    if (!correct && characterCount > 0) {
+      
       scoreAdd.innerHTML = "&#160 &#160 -" + String(letterValue);
       scoreAdd.style.color = "red";
       characterCount -= letterValue;
@@ -275,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //Upgrades and Buttons
 
   document.getElementById("wordcount").addEventListener('click', function () {
-
+    scoreAdd.innerHTML = "";
     if (characterCount < wordCost) {
       alert("You do not have enough characters for this upgrade")
     } else {
@@ -306,13 +308,25 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   document.getElementById("auto").addEventListener('click', function () {
-
+    scoreAdd.innerHTML = "";
     if (characterCount < autoCost) {
       alert("You do not have enough characters for this upgrade")
     } else {
       characterCount -= autoCost;
       autoCost = Math.floor(autoCost*1.3);
       cps += CPS_INCREMENT;
+      setCharacterCounts();
+    }
+  })
+
+  document.getElementById("value").addEventListener('click', function () {
+    scoreAdd.innerHTML = "";
+    if (characterCount < letterCost) {
+      alert("You do not have enough characters for this upgrade")
+    } else {
+      characterCount -= letterCost;
+      letterCost = Math.floor(letterCost*2);
+      letterValue++;
       setCharacterCounts();
     }
   })
@@ -328,6 +342,9 @@ document.addEventListener("DOMContentLoaded", () => {
     wordCount.innerHTML = String(upgrade)
     document.getElementById("autoCost").innerHTML = String(autoCost);
     document.getElementById("wordCost").innerHTML = String(wordCost);
+    document.getElementById("letterCost").innerHTML = String(letterCost);
+    document.getElementById("letterValue").innerHTML = String(letterValue);
+
   }
 
 });
