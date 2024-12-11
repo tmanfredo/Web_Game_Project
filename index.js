@@ -18,8 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(cpsFunction, CPS_INTERVAL);
 
   let lastLetter = document.getElementById("curLetter");
-
+  let scoreAdd = document.getElementById("scoreMath");
   let upgrade = 1;
+  let letterValue = 1;
 
 
 
@@ -193,9 +194,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   document.addEventListener('keypress', function (e) {
+
     const char = e.key;
     lastLetter.textContent = char; // Update the display for the last letter pressed
     lastLetter.style.color = "red";
+    let correct = false;
     cells.forEach(cell => {
       if (checkIfUpgraded(cell)) {
         let letters = cell.querySelectorAll("span");
@@ -205,6 +208,8 @@ document.addEventListener("DOMContentLoaded", () => {
               // Change matching character to green
               letter.classList.add("match");
               lastLetter.style.color = "green"
+              correct = true;
+              scoreAdd.innerHTML = "";
             }
           }
         }
@@ -216,15 +221,22 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           complete = true;
         }
-        console.log(complete);
         // If the entire word is green, refill the cell
         if (complete) {
-          characterCount += letters.length;
+          characterCount += (letters.length * letterValue);
+          scoreAdd.innerHTML = "&#160 &#160 +" + String(letters.length * letterValue);
+          scoreAdd.style.color = "green";
           setCharacterCounts();
           fillCell(cell); // Replace with a new word
         }
       }
     });
+    if (!correct) {
+      scoreAdd.innerHTML = "&#160 &#160 -" + String(letterValue);
+      scoreAdd.style.color = "red";
+      characterCount -= letterValue;
+      setCharacterCounts();
+    }
   });
 
   function drawFeatures() {
@@ -270,10 +282,8 @@ document.addEventListener("DOMContentLoaded", () => {
       characterCount -= wordCost;
 
       let previousCells = ACTIVE_CELLS_LIST[upgrade - 1];
-      console.log(previousCells);
       upgrade++;
       let nextCells = ACTIVE_CELLS_LIST[upgrade - 1];
-      console.log(nextCells);
 
       for (let i = 0; i < nextCells.length; i++) {
         if (i == nextCells.length - 1) {
@@ -285,14 +295,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
       }
-
-
       setCharacterCounts();
       upgradeCells(upgrade)
     }
 
     if (upgrade >= 9) {
-      console.log("Disabling button")
       document.getElementById("wordcount").style.pointerEvents = "none";
       document.getElementById("wordcount").style.opacity = "0.5";
     }
